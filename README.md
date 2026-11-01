@@ -39,3 +39,4 @@ Luego abre http://localhost:8000.
 - La clave del `index.html` es la *publishable/anon*, que está hecha para ir en el navegador. Lo que protege tus datos es la RLS. Nunca pongas ahí la `service_role`.
 - "¿Quién eres?" se guarda en cada dispositivo. Se puede cambiar desde el menú ⋯.
 - Los montos se muestran con formato chileno (`$15.000`). Para cambiarlo, edita la función `fmt` en `index.html`.
+# Cuentas-CASA-FF

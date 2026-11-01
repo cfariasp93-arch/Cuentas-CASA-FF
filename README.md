@@ -20,7 +20,7 @@ App web mínima para llevar las cuentas entre dos personas. Es un solo `index.ht
    ```
 3. En el repositorio, ve a **Settings → Pages**. En *Source*, elige **Deploy from a branch**, rama `main` y carpeta `/ (root)`. Guarda.
 4. En uno o dos minutos la app queda en `https://TU_USUARIO.github.io/cuentas-casa/`.
-5. En Supabase, ve a **Authentication → URL Configuration** y pon esa dirección en *Site URL*.
+5. En Supabase, ve a **Authentication → URL Configuration** y pon esa dirección en *Site URL*. Agrégala también en *Redirect URLs* (`https://cfariasp93-arch.github.io/Cuentas-CASA-FF/`): es a donde vuelve el enlace de "Olvidé mi contraseña".
 
 ## 3. Instalar en el celular
 
@@ -38,5 +38,7 @@ Luego abre http://localhost:8000.
 
 - La clave del `index.html` es la *publishable/anon*, que está hecha para ir en el navegador. Lo que protege tus datos es la RLS. Nunca pongas ahí la `service_role`.
 - "¿Quién eres?" se guarda en cada dispositivo. Se puede cambiar desde el menú ⋯.
+- **Olvidé mi contraseña:** envía un correo con un enlace que abre la app publicada (constante `APP_URL` en `index.html`) para crear una contraseña nueva. Con el correo por defecto de Supabase se pueden enviar pocos correos por hora; si no llega, espera un rato o configura un SMTP propio en **Authentication → Emails**.
+- **Gráficos y Excel:** están hechos sin librerías externas. El Excel (.xlsx) se genera en el mismo navegador, con tres hojas: Movimientos, Resumen por mes y Saldo.
 - Los montos se muestran con formato chileno (`$15.000`). Para cambiarlo, edita la función `fmt` en `index.html`.
 # Cuentas-CASA-FF

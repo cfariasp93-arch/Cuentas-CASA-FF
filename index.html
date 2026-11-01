@@ -20,7 +20,9 @@
     --bg: #f6f6f4; --card: #ffffff; --fg: #1a1a1a; --muted: #6b6b68; --line: #e4e4e0;
     --accent: #1a1a1a; --accent-fg: #ffffff;
     --a: #0d9488; --b: #e2700f; --none: #a3a3a3;
-    --danger: #c42b1c; --ok: #15803d; --warn-bg: #fff4e5; --err-bg: #fdecea;
+    --danger: #c42b1c; --ok: #15803d; --warn-bg: #fff4e5; --err-bg: #fdecea; --ok-bg: #e8f5ec;
+    /* Colores de gráficos (validados para daltonismo y contraste) */
+    --ca: #0d9488; --cb: #e2700f; --cs: #6366f1;
     --radius: 14px;
     color-scheme: light dark;
   }
@@ -29,7 +31,8 @@
       --bg: #111111; --card: #1b1b1b; --fg: #ededed; --muted: #9a9a96; --line: #2c2c2c;
       --accent: #ededed; --accent-fg: #111111;
       --a: #2dd4bf; --b: #fb923c; --none: #666666;
-      --danger: #f87171; --ok: #4ade80; --warn-bg: #3a2a10; --err-bg: #3a1714;
+      --danger: #f87171; --ok: #4ade80; --warn-bg: #3a2a10; --err-bg: #3a1714; --ok-bg: #12301c;
+      --ca: #0f9e90; --cb: #e0721a; --cs: #7378e8;
     }
   }
   * { box-sizing: border-box; }
@@ -114,6 +117,10 @@
   /* Lista */
   ul.list { list-style: none; margin: 1rem 0 0; padding: 0; }
   ul.list li + li { border-top: 1px solid var(--line); }
+  ul.list li { display: flex; align-items: center; gap: .2rem; }
+  ul.list li .item { flex: 1; min-width: 0; }
+  .edit-btn { flex: none; color: var(--muted); margin-right: -.5rem; }
+  .edit-btn:hover { color: var(--fg); background: var(--card); }
   .item {
     width: 100%; display: flex; align-items: center; gap: .8rem; padding: .8rem .2rem;
     background: none; border: 0; text-align: left;
@@ -168,6 +175,70 @@
   .chips input:focus-visible + span { outline: 2px solid var(--a); outline-offset: 2px; }
   .effect { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: .7rem .8rem; font-size: .93rem; }
   .menu-list { display: grid; gap: .5rem; }
+
+  /* Login: enlaces y mensajes */
+  .link-btn {
+    display: block; margin: .9rem auto 0; padding: .5rem; background: none; border: 0;
+    color: var(--muted); font-size: .92rem; text-decoration: underline; text-underline-offset: 3px;
+  }
+  .form-info { background: var(--ok-bg); border-radius: 10px; padding: .7rem .8rem; font-size: .93rem; margin: 0 0 .9rem; }
+  #banner.ok { background: var(--ok-bg); }
+
+  /* Pestañas */
+  .tabs {
+    display: grid; grid-template-columns: 1fr 1fr; gap: .25rem; padding: .25rem;
+    background: var(--card); border: 1px solid var(--line); border-radius: 999px; margin: .2rem 0 .4rem;
+  }
+  .tabs button {
+    min-height: 2.5rem; border: 0; border-radius: 999px; background: transparent; color: var(--muted); font-weight: 500;
+  }
+  .tabs button[aria-selected=true] { background: var(--accent); color: var(--accent-fg); }
+
+  /* Gráficos */
+  .chart { padding: .9rem 1rem 1rem; margin-top: .8rem; }
+  .chart h3 { margin: 0 0 .15rem; font-size: .98rem; font-weight: 600; }
+  .chart .sub { margin: 0 0 .8rem; font-size: .85rem; color: var(--muted); }
+  .chart .empty { padding: 1rem 0 .4rem; }
+  .legend { display: flex; flex-wrap: wrap; gap: .3rem 1rem; font-size: .85rem; color: var(--muted); margin-bottom: .7rem; }
+  .legend span { display: inline-flex; align-items: center; gap: .4rem; }
+  .sw { width: .85rem; height: .85rem; border-radius: 3px; flex: none; background: var(--muted); }
+  .sw.a { background: var(--ca); } .sw.b { background: var(--cb); } .sw.s { background: var(--cs); }
+  .sw.striped, .fill.striped { background: repeating-linear-gradient(135deg, var(--c) 0 2px, transparent 2px 5px); box-shadow: inset 0 0 0 1.5px var(--c); }
+  .sw.striped { --c: var(--muted); }
+
+  .pgroup + .pgroup { margin-top: .8rem; }
+  .pgroup .pname { display: flex; align-items: center; gap: .45rem; font-size: .93rem; margin-bottom: .3rem; }
+  .hbar { display: grid; grid-template-columns: 6.6rem 1fr auto; align-items: center; gap: .55rem; font-size: .85rem; min-height: 1.6rem; }
+  .hbar .k { color: var(--muted); }
+  .hbar .v { font-variant-numeric: tabular-nums; min-width: 4.5rem; text-align: right; }
+  .track { height: .8rem; }
+  .fill { height: 100%; border-radius: 0 4px 4px 0; min-width: 2px; }
+  .fill.a { --c: var(--ca); } .fill.b { --c: var(--cb); }
+  .fill.solid { background: var(--c); }
+  .fill.zero { min-width: 0; }
+  .note { margin: .8rem 0 0; font-size: .88rem; }
+
+  .donut { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; }
+  .donut svg { width: 9rem; height: 9rem; flex: none; }
+  .donut .rows { flex: 1; min-width: 11rem; display: grid; gap: .55rem; }
+  .donut .r { display: grid; grid-template-columns: auto 1fr auto; gap: .1rem .5rem; align-items: center; font-size: .9rem; }
+  .donut .r .pct { color: var(--muted); font-size: .82rem; grid-column: 2 / 4; margin-top: -.15rem; }
+  .donut .r .amt { font-variant-numeric: tabular-nums; font-weight: 500; }
+  .donut-total { font-size: 15px; font-weight: 700; fill: var(--fg); }
+  .donut-cap { font-size: 10px; fill: var(--muted); }
+
+  .cols { display: grid; grid-template-columns: repeat(6, 1fr); gap: .4rem; align-items: end; }
+  .col { display: flex; flex-direction: column; align-items: stretch; gap: .25rem; background: none; border: 0; padding: 0; text-align: center; }
+  .col .cv { font-size: .72rem; font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; }
+  .col .area { height: 7.5rem; display: flex; align-items: flex-end; justify-content: center; }
+  .col .bar { width: min(100%, 2.4rem); border-radius: 4px 4px 0 0; background: var(--none); min-height: 2px; }
+  .col .cl { font-size: .78rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: .3rem; }
+  .col.sel .bar { background: var(--cs); }
+  .col.sel .cv, .col.sel .cl { color: var(--fg); font-weight: 600; }
+
+  .balance.compact { padding: 1.3rem 0 .4rem; }
+  .balance.compact .value { font-size: 2.1rem; margin-bottom: .2rem; }
+  .download { margin-top: 1rem; }
 </style>
 </head>
 <body>
@@ -187,6 +258,34 @@
       <label class="field"><span>Contraseña</span><input type="password" name="password" autocomplete="current-password" required></label>
       <div class="form-error" id="login-error" aria-live="polite"></div>
       <button class="btn primary block" type="submit">Entrar</button>
+    </form>
+    <button class="link-btn" type="button" id="forgot-link">Olvidé mi contraseña</button>
+  </section>
+
+  <!-- Olvidé mi contraseña -->
+  <section id="s-forgot" class="screen center" hidden>
+    <h1>Recuperar contraseña</h1>
+    <p class="muted">Escribe tu email y te enviaremos un enlace para crear una contraseña nueva.</p>
+    <form id="forgot-form" novalidate>
+      <label class="field"><span>Email</span><input type="email" name="email" autocomplete="username" inputmode="email" required></label>
+      <div class="form-error" id="forgot-error" aria-live="polite"></div>
+      <div class="form-info" id="forgot-info" aria-live="polite" hidden></div>
+      <button class="btn primary block" type="submit">Enviar enlace</button>
+      <button class="btn block" type="button" id="forgot-back" style="margin-top:.6rem">Volver</button>
+    </form>
+  </section>
+
+  <!-- Nueva contraseña (desde el enlace del correo) -->
+  <section id="s-reset" class="screen center" hidden>
+    <h1>Nueva contraseña</h1>
+    <p class="muted">Escribe tu nueva contraseña dos veces. Debe tener al menos 8 caracteres.</p>
+    <form id="reset-form" novalidate>
+      <input type="email" name="username" autocomplete="username" hidden>
+      <label class="field"><span>Nueva contraseña</span><input type="password" name="p1" autocomplete="new-password" minlength="8" required></label>
+      <label class="field"><span>Repite la contraseña</span><input type="password" name="p2" autocomplete="new-password" minlength="8" required></label>
+      <div class="form-error" id="reset-error" aria-live="polite"></div>
+      <button class="btn primary block" type="submit">Guardar contraseña</button>
+      <button class="btn block" type="button" id="reset-cancel" style="margin-top:.6rem">Cancelar</button>
     </form>
   </section>
 
@@ -220,25 +319,69 @@
       <button class="icon-btn" type="button" id="menu-btn" aria-label="Menú">⋯</button>
     </header>
 
-    <div class="balance">
-      <div class="label" id="bal-label"></div>
-      <div class="value tabnum" id="bal-value"></div>
-      <button class="btn" type="button" id="settle-btn">Registrar pago</button>
+    <nav class="tabs" role="tablist" aria-label="Secciones">
+      <button type="button" role="tab" id="tab-btn-mov" data-tab="mov" aria-controls="tab-mov" aria-selected="true">Movimientos</button>
+      <button type="button" role="tab" id="tab-btn-charts" data-tab="charts" aria-controls="tab-charts" aria-selected="false" tabindex="-1">Gráficos</button>
+    </nav>
+
+    <div id="tab-mov" role="tabpanel" aria-labelledby="tab-btn-mov">
+      <div class="balance">
+        <div class="label" id="bal-label"></div>
+        <div class="value tabnum" id="bal-value"></div>
+        <button class="btn" type="button" id="settle-btn">Registrar pago</button>
+      </div>
+
+      <div class="month">
+        <button class="icon-btn" type="button" data-shift="-1" aria-label="Mes anterior">‹</button>
+        <h2 class="month-label"></h2>
+        <button class="icon-btn" type="button" data-shift="1" aria-label="Mes siguiente">›</button>
+      </div>
+
+      <div class="card stats">
+        <div class="total"><span class="muted">Total gastado</span><strong class="tabnum" id="month-total"></strong></div>
+        <div id="month-people"></div>
+      </div>
+
+      <ul class="list" id="list"></ul>
+      <div class="empty" id="empty" hidden>Sin movimientos este mes.</div>
     </div>
 
-    <div class="month">
-      <button class="icon-btn" type="button" id="prev-month" aria-label="Mes anterior">‹</button>
-      <h2 id="month-label"></h2>
-      <button class="icon-btn" type="button" id="next-month" aria-label="Mes siguiente">›</button>
-    </div>
+    <div id="tab-charts" role="tabpanel" aria-labelledby="tab-btn-charts" hidden>
+      <div class="month">
+        <button class="icon-btn" type="button" data-shift="-1" aria-label="Mes anterior">‹</button>
+        <h2 class="month-label"></h2>
+        <button class="icon-btn" type="button" data-shift="1" aria-label="Mes siguiente">›</button>
+      </div>
 
-    <div class="card stats">
-      <div class="total"><span class="muted">Total gastado</span><strong class="tabnum" id="month-total"></strong></div>
-      <div id="month-people"></div>
-    </div>
+      <section class="card chart" aria-labelledby="ch1-title">
+        <h3 id="ch1-title">Pagado y le corresponde</h3>
+        <p class="sub">Gastos del mes por persona.</p>
+        <div class="legend" aria-hidden="true">
+          <span><i class="sw"></i>Pagó</span>
+          <span><i class="sw striped"></i>Le corresponde</span>
+        </div>
+        <div id="ch-people"></div>
+      </section>
 
-    <ul class="list" id="list"></ul>
-    <div class="empty" id="empty" hidden>Sin movimientos este mes.</div>
+      <section class="card chart" aria-labelledby="ch2-title">
+        <h3 id="ch2-title">Compartidos y personales</h3>
+        <p class="sub">Cómo se reparte lo gastado en el mes.</p>
+        <div id="ch-donut"></div>
+      </section>
+
+      <section class="card chart" aria-labelledby="ch3-title">
+        <h3 id="ch3-title">Total gastado, últimos 6 meses</h3>
+        <p class="sub">Toca un mes para verlo.</p>
+        <div id="ch-months"></div>
+      </section>
+
+      <div class="balance compact">
+        <div class="label" id="bal-label-2"></div>
+        <div class="value tabnum" id="bal-value-2"></div>
+      </div>
+
+      <button class="btn block download" type="button" id="xlsx-btn">Descargar Excel</button>
+    </div>
 
     <button class="btn primary fab" type="button" id="add-btn">Agregar gasto</button>
   </section>
@@ -281,6 +424,19 @@
   </div>
 </dialog>
 
+<!-- Descargar Excel -->
+<dialog id="xlsx-dlg">
+  <div class="dlg">
+    <h2>Descargar Excel</h2>
+    <p class="muted small" style="margin-bottom:1rem">El archivo trae tres hojas: Movimientos, Resumen por mes y Saldo.</p>
+    <div class="menu-list">
+      <button class="btn block primary" type="button" id="xlsx-month"></button>
+      <button class="btn block" type="button" id="xlsx-all">Todo el historial</button>
+      <button class="btn block" type="button" id="xlsx-close">Cancelar</button>
+    </div>
+  </div>
+</dialog>
+
 <!-- Menú -->
 <dialog id="menu-dlg">
   <div class="dlg">
@@ -299,6 +455,8 @@
 <script>
 const SUPABASE_URL = "https://hcrgpltxeyumwshacsfa.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_QMbWw10p46elQQH9mMxgdw_6e1h0zgC";
+// A dónde vuelve el enlace de "Olvidé mi contraseña". Debe estar en Supabase → Authentication → URL Configuration.
+const APP_URL = "https://cfariasp93-arch.github.io/Cuentas-CASA-FF/";
 
 /* ---------- Lógica pura (sin DOM) ---------- */
 // <logic>
@@ -360,6 +518,208 @@ function shiftMonth(m, d) {
   while (mo > 12) { mo -= 12; y++; }
   return `${y}-${String(mo).padStart(2, "0")}`;
 }
+
+const monthLabel = m => {
+  const s = new Date(m + "-15T12:00:00").toLocaleDateString("es", { month: "long", year: "numeric" });
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
+const monthShort = m => new Date(m + "-15T12:00:00").toLocaleDateString("es", { month: "short" }).replace(".", "");
+
+// Gastos del mes separados en compartidos (50/50) y personales de cada uno.
+function monthBreakdown(list, month) {
+  const out = { split: 0, onlyA: 0, onlyB: 0 };
+  for (const e of list) {
+    if (String(e.spent_on).startsWith(month) && e.type in out) out[e.type] += Number(e.amount) || 0;
+  }
+  for (const k in out) out[k] = round2(out[k]);
+  return out;
+}
+
+// Total gastado de los n meses que terminan en `month` (del más antiguo al más reciente).
+function lastMonths(list, month, n = 6) {
+  const out = [];
+  for (let i = n - 1; i >= 0; i--) {
+    const m = shiftMonth(month, -i);
+    out.push({ month: m, total: monthStats(list, m).total });
+  }
+  return out;
+}
+
+// Monto corto para etiquetas de gráficos: $850, $45 mil, $1,2 M.
+function fmtShort(n) {
+  const v = Math.abs(n);
+  const num = (x, d) => x.toLocaleString("es-CL", { maximumFractionDigits: d });
+  if (v >= 1e6) return "$" + num(v / 1e6, 1) + " M";
+  if (v >= 1e4) return "$" + num(v / 1e3, 0) + " mil";
+  if (v >= 1e3) return "$" + num(v / 1e3, 1) + " mil";
+  return fmt(v);
+}
+
+/* ----- Excel (.xlsx) sin librerías ----- */
+// Celdas: string, número, {v, money:true}, {v, date:true}, con bold opcional.
+const XS = { text: 0, bold: 1, money: 2, moneyDec: 3, date: 4, moneyB: 5, moneyDecB: 6 };
+
+function excelSheets(list, people, scope, month, today) {
+  const A = people.a, B = people.b;
+  const typeName = t => ({
+    split: "Compartido 50/50", onlyA: `Personal de ${A}`, onlyB: `Personal de ${B}`,
+    debtAB: `${A} le debe a ${B}`, debtBA: `${B} le debe a ${A}`, settle: "Pago de saldo",
+  }[t] || t);
+  const who = p => (p === "a" ? A : p === "b" ? B : "");
+  const money = (v, bold = false) => ({ v: round2(Number(v) || 0), money: true, bold });
+  const bold = v => ({ v, bold: true });
+
+  const inScope = list
+    .filter(e => scope === "all" || String(e.spent_on).startsWith(month))
+    .slice()
+    .sort((x, y) => String(x.spent_on).localeCompare(String(y.spent_on)) || String(x.created_at || "").localeCompare(String(y.created_at || "")));
+
+  const movs = [["Fecha", "Descripción", "Tipo", "Quién pagó", "Monto"].map(bold),
+    ...inScope.map(e => [{ v: e.spent_on, date: true }, e.descr?.trim() || "", typeName(e.type), who(e.payer), money(e.amount)])];
+
+  const months = scope === "all"
+    ? [...new Set(list.filter(e => SPEND_TYPES.includes(e.type)).map(e => String(e.spent_on).slice(0, 7)))].sort()
+    : [month];
+  const head = ["Mes", "Total gastado", `Pagó ${A}`, `Le corresponde a ${A}`, `Pagó ${B}`, `Le corresponde a ${B}`].map(bold);
+  const sum = { total: 0, pa: 0, sa: 0, pb: 0, sb: 0 };
+  const resumen = [head, ...months.map(m => {
+    const st = monthStats(list, m);
+    sum.total += st.total; sum.pa += st.paid.a; sum.sa += st.share.a; sum.pb += st.paid.b; sum.sb += st.share.b;
+    return [monthLabel(m), money(st.total), money(st.paid.a), money(st.share.a), money(st.paid.b), money(st.share.b)];
+  })];
+  if (months.length > 1) resumen.push([bold("Total"), money(sum.total, true), money(sum.pa, true), money(sum.sa, true), money(sum.pb, true), money(sum.sb, true)]);
+
+  const net = computeNet(list);
+  const debtor = net > 0 ? B : net < 0 ? A : null, creditor = net > 0 ? A : net < 0 ? B : null;
+  const saldo = [
+    [bold("Concepto"), bold("Valor")],
+    ["Saldo actual", money(Math.abs(net), true)],
+    ["Quién debe", debtor || "Nadie"],
+    ["A quién le debe", creditor || "Nadie"],
+    ["Situación", debtor ? `${debtor} le debe ${fmt(net)} a ${creditor}` : "Están a mano"],
+    ["Calculado el", { v: today, date: true }],
+    ["Nota", "El saldo considera todo el historial, aunque el archivo traiga solo un mes."],
+  ];
+
+  return [
+    { name: "Movimientos", rows: movs, widths: [12, 34, 26, 16, 14], filter: true },
+    { name: "Resumen por mes", rows: resumen, widths: [18, 15, 16, 22, 16, 22] },
+    { name: "Saldo", rows: saldo, widths: [18, 60] },
+  ];
+}
+
+const xesc = s => String(s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "")
+  .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const colName = i => String.fromCharCode(65 + i); // hasta 26 columnas, de sobra
+function excelSerial(iso) {
+  const [y, m, d] = String(iso).slice(0, 10).split("-").map(Number);
+  return (Date.UTC(y, m - 1, d) - Date.UTC(1899, 11, 30)) / 86400000;
+}
+
+function sheetXml(sh) {
+  const rows = sh.rows.map((row, r) => `<row r="${r + 1}">` + row.map((c, i) => {
+    const ref = colName(i) + (r + 1);
+    const o = c !== null && typeof c === "object" ? c : { v: c };
+    if (o.v === "" || o.v == null) return "";
+    if (o.date) return `<c r="${ref}" s="${XS.date}"><v>${excelSerial(o.v)}</v></c>`;
+    if (o.money || typeof o.v === "number") {
+      const dec = o.v % 1 !== 0;
+      const s = o.money ? (o.bold ? (dec ? XS.moneyDecB : XS.moneyB) : (dec ? XS.moneyDec : XS.money)) : (o.bold ? XS.bold : XS.text);
+      return `<c r="${ref}" s="${s}"><v>${o.v}</v></c>`;
+    }
+    return `<c r="${ref}" t="inlineStr"${o.bold ? ` s="${XS.bold}"` : ""}><is><t xml:space="preserve">${xesc(o.v)}</t></is></c>`;
+  }).join("") + "</row>").join("");
+  const lastCol = colName(Math.max(...sh.rows.map(r => r.length)) - 1);
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">`
+    + `<sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>`
+    + `<cols>${sh.widths.map((w, i) => `<col min="${i + 1}" max="${i + 1}" width="${w}" customWidth="1"/>`).join("")}</cols>`
+    + `<sheetData>${rows}</sheetData>`
+    + (sh.filter ? `<autoFilter ref="A1:${lastCol}${sh.rows.length}"/>` : "")
+    + `</worksheet>`;
+}
+
+const STYLES_XML = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">`
+  + `<numFmts count="3"><numFmt numFmtId="164" formatCode="&quot;$&quot;#,##0"/><numFmt numFmtId="165" formatCode="&quot;$&quot;#,##0.00"/><numFmt numFmtId="166" formatCode="dd/mm/yyyy"/></numFmts>`
+  + `<fonts count="2"><font><sz val="11"/><name val="Calibri"/><family val="2"/></font><font><b/><sz val="11"/><name val="Calibri"/><family val="2"/></font></fonts>`
+  + `<fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills>`
+  + `<borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders>`
+  + `<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>`
+  + `<cellXfs count="7">`
+  + `<xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>`
+  + `<xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" applyFont="1"/>`
+  + `<xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>`
+  + `<xf numFmtId="165" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>`
+  + `<xf numFmtId="166" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>`
+  + `<xf numFmtId="164" fontId="1" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1"/>`
+  + `<xf numFmtId="165" fontId="1" fillId="0" borderId="0" xfId="0" applyNumberFormat="1" applyFont="1"/>`
+  + `</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;
+
+function workbookFiles(sheets) {
+  const X = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n`;
+  const filterDefs = sheets.map((sh, i) => sh.filter
+    ? `<definedName name="_xlnm._FilterDatabase" localSheetId="${i}" hidden="1">'${xesc(sh.name)}'!$A$1:$${colName(Math.max(...sh.rows.map(r => r.length)) - 1)}$${sh.rows.length}</definedName>` : "").join("");
+  return [
+    ["[Content_Types].xml", X + `<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">`
+      + `<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/>`
+      + `<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>`
+      + `<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>`
+      + sheets.map((_, i) => `<Override PartName="/xl/worksheets/sheet${i + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join("")
+      + `</Types>`],
+    ["_rels/.rels", X + `<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`],
+    ["xl/workbook.xml", X + `<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>`
+      + sheets.map((sh, i) => `<sheet name="${xesc(sh.name)}" sheetId="${i + 1}" r:id="rId${i + 1}"/>`).join("")
+      + `</sheets>${filterDefs ? `<definedNames>${filterDefs}</definedNames>` : ""}</workbook>`],
+    ["xl/_rels/workbook.xml.rels", X + `<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">`
+      + sheets.map((_, i) => `<Relationship Id="rId${i + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i + 1}.xml"/>`).join("")
+      + `<Relationship Id="rId${sheets.length + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`],
+    ["xl/styles.xml", STYLES_XML],
+    ...sheets.map((sh, i) => [`xl/worksheets/sheet${i + 1}.xml`, sheetXml(sh)]),
+  ];
+}
+
+// ZIP sin compresión (método "stored"): suficiente para un .xlsx pequeño.
+const CRC_TABLE = (() => {
+  const t = new Uint32Array(256);
+  for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; }
+  return t;
+})();
+function crc32(bytes) {
+  let c = 0xFFFFFFFF;
+  for (let i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+function zipStored(files) {
+  const enc = new TextEncoder(), parts = [], central = [];
+  let offset = 0;
+  for (const [name, text] of files) {
+    const nm = enc.encode(name), data = enc.encode(text), crc = crc32(data);
+    const lh = new DataView(new ArrayBuffer(30));
+    lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true);
+    lh.setUint16(8, 0, true); lh.setUint16(10, 0, true); lh.setUint16(12, 0x21, true);
+    lh.setUint32(14, crc, true); lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true);
+    lh.setUint16(26, nm.length, true); lh.setUint16(28, 0, true);
+    const ch = new DataView(new ArrayBuffer(46));
+    ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true);
+    ch.setUint16(10, 0, true); ch.setUint16(12, 0, true); ch.setUint16(14, 0x21, true);
+    ch.setUint32(16, crc, true); ch.setUint32(20, data.length, true); ch.setUint32(24, data.length, true);
+    ch.setUint16(28, nm.length, true); ch.setUint32(42, offset, true);
+    parts.push(new Uint8Array(lh.buffer), nm, data);
+    central.push(new Uint8Array(ch.buffer), nm);
+    offset += 30 + nm.length + data.length;
+  }
+  const cdSize = central.reduce((s, p) => s + p.length, 0);
+  const end = new DataView(new ArrayBuffer(22));
+  end.setUint32(0, 0x06054b50, true); end.setUint16(8, files.length, true); end.setUint16(10, files.length, true);
+  end.setUint32(12, cdSize, true); end.setUint32(16, offset, true);
+  const all = [...parts, ...central, new Uint8Array(end.buffer)];
+  const out = new Uint8Array(all.reduce((s, p) => s + p.length, 0));
+  let pos = 0;
+  for (const p of all) { out.set(p, pos); pos += p.length; }
+  return out;
+}
+const makeXlsx = sheets => zipStored(workbookFiles(sheets));
 // </logic>
 
 /* ---------- Utilidades ---------- */
@@ -380,10 +740,6 @@ function todayISO() {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
 const currentMonth = () => todayISO().slice(0, 7);
-const monthLabel = m => {
-  const s = new Date(m + "-15T12:00:00").toLocaleDateString("es", { month: "long", year: "numeric" });
-  return s.charAt(0).toUpperCase() + s.slice(1);
-};
 const dayLabel = iso => new Date(iso + "T12:00:00").toLocaleDateString("es", { day: "numeric", month: "short" }).replace(".", "");
 function uuid() {
   if (window.crypto?.randomUUID) return crypto.randomUUID();
@@ -396,7 +752,7 @@ function loadMe() { try { const v = localStorage.getItem(ME_KEY); return v === "
 function saveMe(v) { state.me = v; try { if (v) localStorage.setItem(ME_KEY, v); else localStorage.removeItem(ME_KEY); } catch { /* solo en memoria */ } }
 
 /* ---------- Estado ---------- */
-const state = { people: null, expenses: [], month: currentMonth(), me: loadMe(), editing: null, started: false, channel: null };
+const state = { people: null, expenses: [], month: currentMonth(), me: loadMe(), editing: null, started: false, channel: null, tab: "mov" };
 const other = () => (state.me === "a" ? "b" : "a");
 const nameOf = k => (state.people ? state.people[k] : k.toUpperCase());
 const myView = net => (state.me === "a" ? net : -net); // > 0: la otra persona me debe
@@ -452,21 +808,46 @@ if (!window.supabase) {
   document.body.innerHTML = '<p style="padding:2rem;font-family:system-ui">No se pudo cargar la app. Revisa tu conexión y recarga la página.</p>';
   throw new Error("supabase-js no cargó");
 }
+/* ---------- Enlace del correo de recuperación ---------- */
+// Supabase vuelve a la app con #access_token=…&type=recovery, o con #error=… si el enlace venció.
+const LINK_EXPIRED = "El enlace para cambiar la contraseña venció o ya se usó. Pide uno nuevo con “Olvidé mi contraseña”.";
+const urlHash = new URLSearchParams(location.hash.slice(1));
+const urlQuery = new URLSearchParams(location.search);
+let recovering = urlHash.get("type") === "recovery";
+let pendingLoginMsg = "";
+if (urlHash.get("error") || urlQuery.get("error")) {
+  // Se limpia antes de crear el cliente para que Supabase no intente usarlo.
+  pendingLoginMsg = LINK_EXPIRED;
+  recovering = false;
+  history.replaceState(null, "", location.pathname);
+}
+function cleanAuthUrl() {
+  if (location.hash || location.search) history.replaceState(null, "", location.pathname);
+}
+
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
+  // implicit: el enlace funciona aunque se abra en otro dispositivo que el que lo pidió.
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: "implicit" },
 });
 
 /* ---------- Pantallas ---------- */
 function show(id) {
   document.querySelectorAll(".screen").forEach(s => { s.hidden = s.id !== id; });
-  $("#add-btn").hidden = id !== "s-main";
+  $("#add-btn").hidden = id !== "s-main" || state.tab !== "mov";
 }
 
 let userLoggedOut = false;
 sb.auth.onAuthStateChange((event, session) => {
   // No llamar a Supabase dentro del callback (evita bloqueos): diferir.
   setTimeout(() => {
-    if (event === "INITIAL_SESSION") session ? start() : showLogin("");
+    if (event === "PASSWORD_RECOVERY") { recovering = true; return openReset(); }
+    if (recovering) {
+      // Llegó desde el correo: pedir la contraseña nueva antes de entrar.
+      if (event === "INITIAL_SESSION" || event === "SIGNED_IN") session ? openReset() : failRecovery();
+      else if (event === "SIGNED_OUT") failRecovery();
+      return;
+    }
+    if (event === "INITIAL_SESSION") { cleanAuthUrl(); session ? start() : showLogin(pendingLoginMsg); pendingLoginMsg = ""; }
     else if (event === "SIGNED_IN" && !state.started) start();
     else if (event === "SIGNED_OUT") {
       stop();
@@ -502,6 +883,93 @@ $("#login-form").addEventListener("submit", async ev => {
     $("#login-error").textContent = errMsg(err);
   } finally { btn.disabled = false; }
 });
+
+/* ---------- Olvidé mi contraseña ---------- */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+$("#forgot-link").onclick = () => {
+  const f = $("#forgot-form");
+  f.email.value = $("#login-form").email.value.trim();
+  $("#forgot-error").textContent = "";
+  $("#forgot-info").hidden = true;
+  show("s-forgot");
+  f.email.focus();
+};
+$("#forgot-back").onclick = () => showLogin("");
+
+$("#forgot-form").addEventListener("submit", async ev => {
+  ev.preventDefault();
+  const f = ev.target, btn = f.querySelector("button[type=submit]");
+  const err = $("#forgot-error"), info = $("#forgot-info");
+  const email = f.email.value.trim();
+  info.hidden = true;
+  if (!EMAIL_RE.test(email)) { err.textContent = "Escribe un email válido, por ejemplo nombre@correo.com."; f.email.focus(); return; }
+  btn.disabled = true; err.textContent = "";
+  try {
+    const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: APP_URL });
+    if (error) throw error;
+    // Mismo mensaje exista o no la cuenta, para no revelar qué emails están registrados.
+    info.textContent = "Si hay una cuenta con ese email, te llegará un correo con un enlace para crear una contraseña nueva. Revisa también la carpeta de spam.";
+    info.hidden = false;
+  } catch (e) {
+    const m = String(e?.message || "");
+    err.textContent =
+      isNetworkError(e) ? "Sin conexión. Revisa tu internet e intenta de nuevo." :
+      e?.status === 429 || /rate|too many|seconds/i.test(m) ? "Ya pediste un enlace hace poco. Espera unos minutos antes de pedir otro." :
+      /invalid|validate email|format/i.test(m) ? "Escribe un email válido, por ejemplo nombre@correo.com." :
+      "No se pudo enviar el correo. Intenta de nuevo más tarde.";
+  } finally { btn.disabled = false; }
+});
+
+/* ---------- Nueva contraseña ---------- */
+function openReset() {
+  cleanAuthUrl();
+  if (state.started) stop();
+  const f = $("#reset-form");
+  if (!$("#s-reset").hidden) return;
+  f.reset();
+  $("#reset-error").textContent = "";
+  show("s-reset");
+  f.p1.focus();
+  // Para que el gestor de contraseñas asocie la nueva al email correcto.
+  sb.auth.getSession().then(({ data }) => { f.username.value = data.session?.user?.email || ""; }).catch(() => {});
+}
+function failRecovery() {
+  recovering = false;
+  cleanAuthUrl();
+  showLogin(LINK_EXPIRED);
+}
+
+$("#reset-form").addEventListener("submit", async ev => {
+  ev.preventDefault();
+  const f = ev.target, btn = f.querySelector("button[type=submit]"), err = $("#reset-error");
+  const p1 = f.p1.value, p2 = f.p2.value;
+  if (p1.length < 8) { err.textContent = "La contraseña debe tener al menos 8 caracteres."; f.p1.focus(); return; }
+  if (p1 !== p2) { err.textContent = "Las contraseñas no coinciden. Escríbelas de nuevo."; f.p2.focus(); return; }
+  btn.disabled = true; err.textContent = "";
+  try {
+    const { error } = await sb.auth.updateUser({ password: p1 });
+    if (error) throw error;
+    recovering = false;
+    f.reset();
+    showBanner("Listo, tu contraseña quedó cambiada.", "ok");
+    start();
+  } catch (e) {
+    const m = String(e?.message || ""), code = e?.code || "";
+    err.textContent =
+      isNetworkError(e) ? "Sin conexión. Revisa tu internet e intenta de nuevo." :
+      code === "same_password" || /different from the old/i.test(m) ? "La contraseña nueva debe ser distinta de la anterior." :
+      code === "weak_password" || /weak|should be at least|characters/i.test(m) ? "La contraseña es muy débil. Usa una más larga o mezcla letras, números y símbolos." :
+      e?.status === 429 || /rate|too many/i.test(m) ? "Demasiados intentos. Espera un momento." :
+      e?.status === 401 || e?.status === 403 || /session|jwt|expired|token/i.test(m) ? LINK_EXPIRED :
+      "No se pudo guardar la contraseña. Intenta de nuevo.";
+  } finally { btn.disabled = false; }
+});
+
+$("#reset-cancel").onclick = async () => {
+  recovering = false;
+  userLoggedOut = true;
+  await sb.auth.signOut({ scope: "local" });
+};
 
 /* ---------- Carga de datos ---------- */
 async function fetchPeople() {
@@ -651,7 +1119,7 @@ function render() {
   val.classList.toggle("zero", net === 0);
   $("#settle-btn").disabled = net === 0;
 
-  $("#month-label").textContent = monthLabel(state.month);
+  document.querySelectorAll(".month-label").forEach(el => { el.textContent = monthLabel(state.month); });
   const st = monthStats(state.expenses, state.month);
   $("#month-total").textContent = fmt(st.total);
   const order = [state.me, other()];
@@ -671,8 +1139,162 @@ function render() {
       h("span", { class: "main" },
         h("div", { class: "desc", text: e.descr?.trim() || typeLabel(e.type) }),
         h("div", { class: "meta", text: [dayLabel(e.spent_on), e.descr?.trim() ? typeLabel(e.type) : null, payerLabel(e)].filter(Boolean).join(" · ") })),
-      h("span", { class: "amt", text: fmt(e.amount) })))));
+      h("span", { class: "amt", text: fmt(e.amount) })),
+    h("button", { class: "icon-btn edit-btn", type: "button", title: "Modificar",
+      "aria-label": `Modificar: ${e.descr?.trim() || typeLabel(e.type)}, ${fmt(e.amount)}`, onclick: () => openExpense(e) },
+      pencilIcon()))));
+
+  renderCharts(net, st);
 }
+
+function pencilIcon() {
+  return svg("svg", { viewBox: "0 0 24 24", width: 18, height: 18, fill: "none", stroke: "currentColor",
+    "stroke-width": 2, "stroke-linecap": "round", "stroke-linejoin": "round", "aria-hidden": "true" },
+    svg("path", { d: "M12 20h9" }),
+    svg("path", { d: "M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" }));
+}
+
+/* ---------- Pestañas ---------- */
+function setTab(t) {
+  state.tab = t;
+  document.querySelectorAll("[data-tab]").forEach(b => {
+    const on = b.dataset.tab === t;
+    b.setAttribute("aria-selected", String(on));
+    b.tabIndex = on ? 0 : -1;
+  });
+  $("#tab-mov").hidden = t !== "mov";
+  $("#tab-charts").hidden = t !== "charts";
+  $("#add-btn").hidden = $("#s-main").hidden || t !== "mov";
+  scrollTo({ top: 0 });
+}
+document.querySelectorAll("[data-tab]").forEach(b => {
+  b.addEventListener("click", () => setTab(b.dataset.tab));
+  b.addEventListener("keydown", ev => {
+    if (ev.key !== "ArrowLeft" && ev.key !== "ArrowRight") return;
+    const next = b.dataset.tab === "mov" ? "charts" : "mov";
+    setTab(next);
+    document.querySelector(`[data-tab="${next}"]`).focus();
+  });
+});
+
+/* ---------- Gráficos ---------- */
+const SVG_NS = "http://www.w3.org/2000/svg";
+function svg(tag, attrs = {}, ...kids) {
+  const el = document.createElementNS(SVG_NS, tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  for (const k of kids) if (k != null) el.append(k);
+  return el;
+}
+const pct = (v, total) => (total > 0 ? Math.round((v / total) * 100) : 0);
+
+function renderCharts(net, st) {
+  const order = [state.me, other()];
+  const who = k => (k === state.me ? `Tú (${nameOf(k)})` : nameOf(k));
+
+  // 1. Pagó y le corresponde, por persona.
+  const max = Math.max(st.paid.a, st.paid.b, st.share.a, st.share.b);
+  const bar = (k, label, v, kind) => h("div", { class: "hbar", title: `${nameOf(k)} · ${label}: ${fmt(v)}` },
+    h("span", { class: "k", text: label }),
+    h("div", { class: "track" }, h("div", { class: `fill ${k} ${kind}${v > 0 ? "" : " zero"}`, style: `width:${max > 0 ? (v / max) * 100 : 0}%` })),
+    h("span", { class: "v", text: fmt(v) }));
+  if (max > 0) {
+    const diff = round2(st.paid.a - st.share.a); // > 0: A pagó de más
+    const over = diff > 0 ? "a" : "b";
+    $("#ch-people").replaceChildren(
+      ...order.map(k => h("div", { class: "pgroup" },
+        h("div", { class: "pname" }, h("span", { class: "dot " + k }), h("span", { text: who(k) })),
+        bar(k, "Pagó", st.paid[k], "solid"),
+        bar(k, "Le corresponde", st.share[k], "striped"))),
+      h("p", { class: "note muted", text: Math.abs(diff) < 0.005
+        ? "Este mes cada uno pagó justo lo que le corresponde."
+        : `Este mes ${over === state.me ? "pagaste" : nameOf(over) + " pagó"} ${fmt(diff)} más de lo que le corresponde.` }));
+  } else {
+    $("#ch-people").replaceChildren(h("div", { class: "empty", text: "Sin gastos este mes." }));
+  }
+
+  // 2. Dona: compartidos vs. personales.
+  const bd = monthBreakdown(state.expenses, state.month);
+  const segs = [
+    { key: "s", label: "Compartidos (50/50)", v: bd.split },
+    { key: "a", label: "Personales de " + nameOf("a"), v: bd.onlyA },
+    { key: "b", label: "Personales de " + nameOf("b"), v: bd.onlyB },
+  ];
+  const total = round2(bd.split + bd.onlyA + bd.onlyB);
+  if (total > 0) {
+    const R = 60, C = 2 * Math.PI * R, nonZero = segs.filter(s => s.v > 0).length;
+    const gap = nonZero > 1 ? 3 : 0;
+    let off = 0;
+    const ring = svg("svg", { viewBox: "0 0 160 160", role: "img",
+      "aria-label": segs.map(s => `${s.label}: ${fmt(s.v)} (${pct(s.v, total)}%)`).join(". ") },
+      svg("circle", { cx: 80, cy: 80, r: R, fill: "none", style: "stroke: var(--line)", "stroke-width": 22 }));
+    for (const s of segs) {
+      if (!(s.v > 0)) continue;
+      const len = (s.v / total) * C;
+      ring.append(svg("circle", {
+        cx: 80, cy: 80, r: R, fill: "none", style: `stroke: var(--c${s.key})`, "stroke-width": 22,
+        "stroke-dasharray": `${Math.max(len - gap, 0.5)} ${C}`, "stroke-dashoffset": -off, transform: "rotate(-90 80 80)",
+      }, svg("title", {}, `${s.label}: ${fmt(s.v)} (${pct(s.v, total)}%)`)));
+      off += len;
+    }
+    ring.append(
+      svg("text", { x: 80, y: 78, "text-anchor": "middle", class: "donut-total" }, fmtShort(total)),
+      svg("text", { x: 80, y: 95, "text-anchor": "middle", class: "donut-cap" }, "total del mes"));
+    $("#ch-donut").replaceChildren(h("div", { class: "donut" }, ring,
+      h("div", { class: "rows" }, ...segs.map(s => h("div", { class: "r" },
+        h("i", { class: "sw " + s.key }),
+        h("span", { text: s.label }),
+        h("span", { class: "amt", text: fmt(s.v) }),
+        h("span", { class: "pct", text: `${pct(s.v, total)}% del total` }))))));
+  } else {
+    $("#ch-donut").replaceChildren(h("div", { class: "empty", text: "Sin gastos este mes." }));
+  }
+
+  // 3. Últimos 6 meses (termina en el mes elegido).
+  const months = lastMonths(state.expenses, state.month, 6);
+  const mmax = Math.max(...months.map(m => m.total));
+  $("#ch-months").replaceChildren(h("div", { class: "cols" }, ...months.map(m => h("button", {
+    type: "button", class: "col" + (m.month === state.month ? " sel" : ""),
+    title: `${monthLabel(m.month)}: ${fmt(m.total)}`, "aria-label": `${monthLabel(m.month)}: ${fmt(m.total)}`,
+    onclick: () => { state.month = m.month; render(); },
+  },
+    h("span", { class: "cv", text: fmtShort(m.total) }),
+    h("span", { class: "area" }, h("span", { class: "bar", style: `height:${mmax > 0 ? Math.max((m.total / mmax) * 100, m.total > 0 ? 2 : 0) : 0}%` })),
+    h("span", { class: "cl", text: monthShort(m.month) })))));
+
+  // Saldo, igual que arriba.
+  $("#bal-label-2").textContent = balanceText(net);
+  const v2 = $("#bal-value-2");
+  v2.textContent = fmt(net);
+  v2.classList.toggle("zero", net === 0);
+}
+
+/* ---------- Descargar Excel ---------- */
+const xlsxDlg = $("#xlsx-dlg");
+$("#xlsx-btn").onclick = () => {
+  $("#xlsx-month").textContent = "Solo " + monthLabel(state.month).toLowerCase();
+  $("#xlsx-all").disabled = state.expenses.length === 0;
+  xlsxDlg.showModal();
+};
+$("#xlsx-close").onclick = () => xlsxDlg.close();
+function downloadXlsx(scope) {
+  try {
+    const bytes = makeXlsx(excelSheets(state.expenses, state.people, scope, state.month, todayISO()));
+    const blob = new Blob([bytes], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+    const url = URL.createObjectURL(blob);
+    const a = h("a", { href: url, download: scope === "all" ? `cuentas-casa-historial-${todayISO()}.xlsx` : `cuentas-casa-${state.month}.xlsx` });
+    document.body.append(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+    xlsxDlg.close();
+  } catch (err) {
+    console.error(err);
+    xlsxDlg.close();
+    showBanner("No se pudo crear el archivo Excel. Intenta de nuevo.");
+  }
+}
+$("#xlsx-month").onclick = () => downloadXlsx("month");
+$("#xlsx-all").onclick = () => downloadXlsx("all");
 
 // Etiquetas en primera persona.
 const typeToChoice = t => ({
@@ -694,8 +1316,9 @@ const payerLabel = e => (e.payer ? (e.payer === state.me ? "pagué yo" : "pagó 
 const needsPayer = c => !(c === "iowe" || c === "owesme");
 
 /* ---------- Mes ---------- */
-$("#prev-month").onclick = () => { state.month = shiftMonth(state.month, -1); render(); };
-$("#next-month").onclick = () => { state.month = shiftMonth(state.month, 1); render(); };
+document.querySelectorAll("[data-shift]").forEach(b => {
+  b.onclick = () => { state.month = shiftMonth(state.month, Number(b.dataset.shift)); render(); };
+});
 
 /* ---------- Confirmación ---------- */
 function confirmBox(title, text, okLabel = "Aceptar", danger = false) {
@@ -746,7 +1369,7 @@ function buildChips(container, name, options, checked) {
 
 function openExpense(e = null) {
   state.editing = e;
-  $("#expense-title").textContent = e ? "Editar movimiento" : "Agregar gasto";
+  $("#expense-title").textContent = e ? "Modificar movimiento" : "Agregar gasto";
   $("#expense-error").textContent = "";
   $("#expense-delete").hidden = !e;
   const choices = ["split", "mine", "theirs", "iowe", "owesme"];
